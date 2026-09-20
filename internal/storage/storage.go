@@ -21,7 +21,7 @@ func readTask() ([]Task, error){
 	data, err := os.ReadFile("task.json")
 	if err != nil{
 		fmt.Println("Список пуст")
-		return nil, nil
+		return nil, err
 	}
 
 	var u []Task
@@ -32,6 +32,19 @@ func readTask() ([]Task, error){
 	return u, nil
 }
 
-func writeTask(){
+func writeTask(tasksAdd []Task) error{
+	//принимаем задачу и кодируем ее в json
+	data, er := json.MarshalIndent(tasksAdd, "", "    ")
+	if er != nil{//обработка ошибки
+		fmt.Println("ошибка при сериализации: ", er)
+		return er
+	}
+	//делаем запись в файл
+	err := os.WriteFile("task.json", data, 0644)
+	if err != nil{//обработка ошибки again
+		fmt.Println("Ошибка записи файла:", err)
+		return err
+	}
 
+	return nil
 }
