@@ -8,7 +8,7 @@ import (
 	"task-tracker/internal/storage"
 )
 
-func addTask(description string) error{
+func AddTask(description string) error{
 	maxID := 0
 	argWithProg := os.Args
 	if len(argWithProg) < 3{
@@ -18,7 +18,7 @@ func addTask(description string) error{
 
 	read, err:= storage.ReadTask()
 	if err != nil{
-		return nil
+		return err
 	}else{
 		for _, task := range read{
 			if task.ID > maxID{
