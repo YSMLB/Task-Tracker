@@ -17,7 +17,7 @@ type Task struct{
 	UpdateAt time.Time `json:"updateat"`
 }
 
-func readTask() ([]Task, error){
+func ReadTask() ([]Task, error){
 	data, err := os.ReadFile("task.json")
 	if err != nil{
 		fmt.Println("Список пуст")
@@ -32,7 +32,7 @@ func readTask() ([]Task, error){
 	return u, nil
 }
 
-func writeTask(tasksAdd []Task) error{
+func WriteTask(tasksAdd []Task) error{
 	//принимаем задачу и кодируем ее в json
 	data, er := json.MarshalIndent(tasksAdd, "", "    ")
 	if er != nil{//обработка ошибки
