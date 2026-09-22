@@ -3,6 +3,8 @@ package cli
 import (
 	"fmt"
 	"os"
+
+	"task-tracker/internal/service"
 )
 
 func Run() error{
@@ -14,8 +16,24 @@ func Run() error{
 	}
 
 	switch argsWithProg[1]{
-	case "add": fmt.Println("вызвана функция add")
-	case "list": fmt.Println("вызвана функция lsit")
+	case "add": 
+	if len(argsWithProg) < 3{
+		fmt.Println("Пожалуйста укажите описание задачи")
+		return nil
+	}
+	err := service.AddTask(argsWithProg[2])
+	if err != nil{
+		fmt.Println("error")
+	}else{
+		fmt.Println("Task added succesfully")
+	}
+
+	case "list": 
+	err := service.ListTask()
+	if err != nil{
+		fmt.Println("error")
+		return nil
+	}
 	case "update": fmt.Println("вызвана функция update")
 	case "delete": fmt.Println("вызвана функция delete")
 	//все команды крч

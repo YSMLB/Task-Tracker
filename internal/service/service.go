@@ -1,4 +1,4 @@
-package serviece
+package service
 
 import (
 	"fmt"
@@ -43,8 +43,29 @@ func AddTask(description string) error{
 	return nil
 }
 
-func listTask(){
+func ListTask() error{
+	read, err := storage.ReadTask()
 
+
+	if err != nil{
+		fmt.Println("неудалось прочитать список")
+		return err
+	}
+
+	if len(read) == 0{
+		fmt.Println("Список задач пуст")
+	}else{
+		for _, task := range read{
+			fmt.Println("ID: ", task.ID, 
+			"\n Задача: ", task.Description,
+			"\n Статус:", task.Status,
+			"\n Время создания задачи: ", task.CreatedAt, 
+			"\n Время обновления: ", task.UpdateAt,
+		)
+
+		}
+	}
+	return nil
 }
 
 func listStatTask(){
